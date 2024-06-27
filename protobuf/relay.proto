@@ -39,19 +39,14 @@ message BlockHeader{
   string logs_bloom = 7;
   string difficulty = 8;
   string number = 9;
-  string gas_limit = 10;
-  string gas_used = 11;
-  string timestamp = 12;
-  string extra_data = 13;
+  uint64 gas_limit = 10;
+  uint64 gas_used = 11;
+  uint64 timestamp = 12;
+  bytes extra_data = 13;
   string mix_hash = 14;
-  string nonce = 15;
+  uint64 nonce = 15;
   string base_fee_per_gas = 16;
   string withdrawals_root = 17;
-}
-
-message NextValidator{
-  string block_height = 1;
-  string coinbase = 2;
 }
 
 message BlocksReply{

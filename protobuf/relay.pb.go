@@ -246,12 +246,12 @@ type BlockHeader struct {
 	LogsBloom        string `protobuf:"bytes,7,opt,name=logs_bloom,json=logsBloom,proto3" json:"logs_bloom,omitempty"`
 	Difficulty       string `protobuf:"bytes,8,opt,name=difficulty,proto3" json:"difficulty,omitempty"`
 	Number           string `protobuf:"bytes,9,opt,name=number,proto3" json:"number,omitempty"`
-	GasLimit         string `protobuf:"bytes,10,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
-	GasUsed          string `protobuf:"bytes,11,opt,name=gas_used,json=gasUsed,proto3" json:"gas_used,omitempty"`
-	Timestamp        string `protobuf:"bytes,12,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	ExtraData        string `protobuf:"bytes,13,opt,name=extra_data,json=extraData,proto3" json:"extra_data,omitempty"`
+	GasLimit         uint64 `protobuf:"varint,10,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
+	GasUsed          uint64 `protobuf:"varint,11,opt,name=gas_used,json=gasUsed,proto3" json:"gas_used,omitempty"`
+	Timestamp        uint64 `protobuf:"varint,12,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	ExtraData        []byte `protobuf:"bytes,13,opt,name=extra_data,json=extraData,proto3" json:"extra_data,omitempty"`
 	MixHash          string `protobuf:"bytes,14,opt,name=mix_hash,json=mixHash,proto3" json:"mix_hash,omitempty"`
-	Nonce            string `protobuf:"bytes,15,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	Nonce            uint64 `protobuf:"varint,15,opt,name=nonce,proto3" json:"nonce,omitempty"`
 	BaseFeePerGas    string `protobuf:"bytes,16,opt,name=base_fee_per_gas,json=baseFeePerGas,proto3" json:"base_fee_per_gas,omitempty"`
 	WithdrawalsRoot  string `protobuf:"bytes,17,opt,name=withdrawals_root,json=withdrawalsRoot,proto3" json:"withdrawals_root,omitempty"`
 }
@@ -351,32 +351,32 @@ func (x *BlockHeader) GetNumber() string {
 	return ""
 }
 
-func (x *BlockHeader) GetGasLimit() string {
+func (x *BlockHeader) GetGasLimit() uint64 {
 	if x != nil {
 		return x.GasLimit
 	}
-	return ""
+	return 0
 }
 
-func (x *BlockHeader) GetGasUsed() string {
+func (x *BlockHeader) GetGasUsed() uint64 {
 	if x != nil {
 		return x.GasUsed
 	}
-	return ""
+	return 0
 }
 
-func (x *BlockHeader) GetTimestamp() string {
+func (x *BlockHeader) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
-	return ""
+	return 0
 }
 
-func (x *BlockHeader) GetExtraData() string {
+func (x *BlockHeader) GetExtraData() []byte {
 	if x != nil {
 		return x.ExtraData
 	}
-	return ""
+	return nil
 }
 
 func (x *BlockHeader) GetMixHash() string {
@@ -386,11 +386,11 @@ func (x *BlockHeader) GetMixHash() string {
 	return ""
 }
 
-func (x *BlockHeader) GetNonce() string {
+func (x *BlockHeader) GetNonce() uint64 {
 	if x != nil {
 		return x.Nonce
 	}
-	return ""
+	return 0
 }
 
 func (x *BlockHeader) GetBaseFeePerGas() string {
@@ -403,61 +403,6 @@ func (x *BlockHeader) GetBaseFeePerGas() string {
 func (x *BlockHeader) GetWithdrawalsRoot() string {
 	if x != nil {
 		return x.WithdrawalsRoot
-	}
-	return ""
-}
-
-type NextValidator struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	BlockHeight string `protobuf:"bytes,1,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
-	Coinbase    string `protobuf:"bytes,2,opt,name=coinbase,proto3" json:"coinbase,omitempty"`
-}
-
-func (x *NextValidator) Reset() {
-	*x = NextValidator{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *NextValidator) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*NextValidator) ProtoMessage() {}
-
-func (x *NextValidator) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use NextValidator.ProtoReflect.Descriptor instead.
-func (*NextValidator) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *NextValidator) GetBlockHeight() string {
-	if x != nil {
-		return x.BlockHeight
-	}
-	return ""
-}
-
-func (x *NextValidator) GetCoinbase() string {
-	if x != nil {
-		return x.Coinbase
 	}
 	return ""
 }
@@ -475,7 +420,7 @@ type BlocksReply struct {
 func (x *BlocksReply) Reset() {
 	*x = BlocksReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[6]
+		mi := &file_relay_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -488,7 +433,7 @@ func (x *BlocksReply) String() string {
 func (*BlocksReply) ProtoMessage() {}
 
 func (x *BlocksReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[6]
+	mi := &file_relay_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -501,7 +446,7 @@ func (x *BlocksReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlocksReply.ProtoReflect.Descriptor instead.
 func (*BlocksReply) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{6}
+	return file_relay_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *BlocksReply) GetHash() string {
@@ -536,7 +481,7 @@ type Transaction struct {
 func (x *Transaction) Reset() {
 	*x = Transaction{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[7]
+		mi := &file_relay_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -549,7 +494,7 @@ func (x *Transaction) String() string {
 func (*Transaction) ProtoMessage() {}
 
 func (x *Transaction) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[7]
+	mi := &file_relay_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -562,7 +507,7 @@ func (x *Transaction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Transaction.ProtoReflect.Descriptor instead.
 func (*Transaction) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{7}
+	return file_relay_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Transaction) GetContent() string {
@@ -583,7 +528,7 @@ type Transactions struct {
 func (x *Transactions) Reset() {
 	*x = Transactions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[8]
+		mi := &file_relay_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -596,7 +541,7 @@ func (x *Transactions) String() string {
 func (*Transactions) ProtoMessage() {}
 
 func (x *Transactions) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[8]
+	mi := &file_relay_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -609,7 +554,7 @@ func (x *Transactions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Transactions.ProtoReflect.Descriptor instead.
 func (*Transactions) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{8}
+	return file_relay_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Transactions) GetTransactions() []*Transaction {
@@ -630,7 +575,7 @@ type SendTxRequest struct {
 func (x *SendTxRequest) Reset() {
 	*x = SendTxRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[9]
+		mi := &file_relay_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -643,7 +588,7 @@ func (x *SendTxRequest) String() string {
 func (*SendTxRequest) ProtoMessage() {}
 
 func (x *SendTxRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[9]
+	mi := &file_relay_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -656,7 +601,7 @@ func (x *SendTxRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendTxRequest.ProtoReflect.Descriptor instead.
 func (*SendTxRequest) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{9}
+	return file_relay_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SendTxRequest) GetTransaction() string {
@@ -677,7 +622,7 @@ type SendTxsRequest struct {
 func (x *SendTxsRequest) Reset() {
 	*x = SendTxsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[10]
+		mi := &file_relay_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -690,7 +635,7 @@ func (x *SendTxsRequest) String() string {
 func (*SendTxsRequest) ProtoMessage() {}
 
 func (x *SendTxsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[10]
+	mi := &file_relay_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -703,7 +648,7 @@ func (x *SendTxsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendTxsRequest.ProtoReflect.Descriptor instead.
 func (*SendTxsRequest) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{10}
+	return file_relay_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SendTxsRequest) GetTransactions() string {
@@ -724,7 +669,7 @@ type SendTxReply struct {
 func (x *SendTxReply) Reset() {
 	*x = SendTxReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[11]
+		mi := &file_relay_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -737,7 +682,7 @@ func (x *SendTxReply) String() string {
 func (*SendTxReply) ProtoMessage() {}
 
 func (x *SendTxReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[11]
+	mi := &file_relay_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -750,7 +695,7 @@ func (x *SendTxReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendTxReply.ProtoReflect.Descriptor instead.
 func (*SendTxReply) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{11}
+	return file_relay_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SendTxReply) GetTxHash() string {
@@ -771,7 +716,7 @@ type SendTxsReply struct {
 func (x *SendTxsReply) Reset() {
 	*x = SendTxsReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_relay_proto_msgTypes[12]
+		mi := &file_relay_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -784,7 +729,7 @@ func (x *SendTxsReply) String() string {
 func (*SendTxsReply) ProtoMessage() {}
 
 func (x *SendTxsReply) ProtoReflect() protoreflect.Message {
-	mi := &file_relay_proto_msgTypes[12]
+	mi := &file_relay_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -797,7 +742,7 @@ func (x *SendTxsReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendTxsReply.ProtoReflect.Descriptor instead.
 func (*SendTxsReply) Descriptor() ([]byte, []int) {
-	return file_relay_proto_rawDescGZIP(), []int{12}
+	return file_relay_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SendTxsReply) GetTxHashs() []string {
@@ -848,27 +793,22 @@ var file_relay_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x64, 0x69, 0x66, 0x66, 0x69, 0x63, 0x75, 0x6c, 0x74, 0x79,
 	0x12, 0x16, 0x0a, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x1b, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f,
-	0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x67, 0x61, 0x73,
+	0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x67, 0x61, 0x73,
 	0x4c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x67, 0x61, 0x73, 0x5f, 0x75, 0x73, 0x65,
-	0x64, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x67, 0x61, 0x73, 0x55, 0x73, 0x65, 0x64,
+	0x64, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x67, 0x61, 0x73, 0x55, 0x73, 0x65, 0x64,
 	0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x0c, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1d,
+	0x01, 0x28, 0x04, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1d,
 	0x0a, 0x0a, 0x65, 0x78, 0x74, 0x72, 0x61, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x0d, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x09, 0x65, 0x78, 0x74, 0x72, 0x61, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x0a,
+	0x28, 0x0c, 0x52, 0x09, 0x65, 0x78, 0x74, 0x72, 0x61, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x0a,
 	0x08, 0x6d, 0x69, 0x78, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x07, 0x6d, 0x69, 0x78, 0x48, 0x61, 0x73, 0x68, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63,
-	0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x27,
+	0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x27,
 	0x0a, 0x10, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x66, 0x65, 0x65, 0x5f, 0x70, 0x65, 0x72, 0x5f, 0x67,
 	0x61, 0x73, 0x18, 0x10, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x62, 0x61, 0x73, 0x65, 0x46, 0x65,
 	0x65, 0x50, 0x65, 0x72, 0x47, 0x61, 0x73, 0x12, 0x29, 0x0a, 0x10, 0x77, 0x69, 0x74, 0x68, 0x64,
 	0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x5f, 0x72, 0x6f, 0x6f, 0x74, 0x18, 0x11, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x0f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x6f,
-	0x6f, 0x74, 0x22, 0x4e, 0x0a, 0x0d, 0x4e, 0x65, 0x78, 0x74, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61,
-	0x74, 0x6f, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x65, 0x69,
-	0x67, 0x68, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b,
-	0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x69, 0x6e, 0x62, 0x61,
-	0x73, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x69, 0x6e, 0x62, 0x61,
-	0x73, 0x65, 0x22, 0x74, 0x0a, 0x0b, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x70, 0x6c,
+	0x6f, 0x74, 0x22, 0x74, 0x0a, 0x0b, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x52, 0x65, 0x70, 0x6c,
 	0x79, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x61, 0x73, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x04, 0x68, 0x61, 0x73, 0x68, 0x12, 0x2f, 0x0a, 0x06, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x63, 0x68, 0x61,
@@ -929,35 +869,34 @@ func file_relay_proto_rawDescGZIP() []byte {
 	return file_relay_proto_rawDescData
 }
 
-var file_relay_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_relay_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_relay_proto_goTypes = []interface{}{
 	(*TxsRequest)(nil),     // 0: blockchain.TxsRequest
 	(*Tx)(nil),             // 1: blockchain.Tx
 	(*TxsReply)(nil),       // 2: blockchain.TxsReply
 	(*BlocksRequest)(nil),  // 3: blockchain.BlocksRequest
 	(*BlockHeader)(nil),    // 4: blockchain.BlockHeader
-	(*NextValidator)(nil),  // 5: blockchain.NextValidator
-	(*BlocksReply)(nil),    // 6: blockchain.BlocksReply
-	(*Transaction)(nil),    // 7: blockchain.Transaction
-	(*Transactions)(nil),   // 8: blockchain.Transactions
-	(*SendTxRequest)(nil),  // 9: blockchain.SendTxRequest
-	(*SendTxsRequest)(nil), // 10: blockchain.SendTxsRequest
-	(*SendTxReply)(nil),    // 11: blockchain.SendTxReply
-	(*SendTxsReply)(nil),   // 12: blockchain.SendTxsReply
+	(*BlocksReply)(nil),    // 5: blockchain.BlocksReply
+	(*Transaction)(nil),    // 6: blockchain.Transaction
+	(*Transactions)(nil),   // 7: blockchain.Transactions
+	(*SendTxRequest)(nil),  // 8: blockchain.SendTxRequest
+	(*SendTxsRequest)(nil), // 9: blockchain.SendTxsRequest
+	(*SendTxReply)(nil),    // 10: blockchain.SendTxReply
+	(*SendTxsReply)(nil),   // 11: blockchain.SendTxsReply
 }
 var file_relay_proto_depIdxs = []int32{
 	1,  // 0: blockchain.TxsReply.tx:type_name -> blockchain.Tx
 	4,  // 1: blockchain.BlocksReply.header:type_name -> blockchain.BlockHeader
 	1,  // 2: blockchain.BlocksReply.txs:type_name -> blockchain.Tx
-	7,  // 3: blockchain.Transactions.transactions:type_name -> blockchain.Transaction
-	9,  // 4: blockchain.Gateway.SendTx:input_type -> blockchain.SendTxRequest
-	10, // 5: blockchain.Gateway.SendTxs:input_type -> blockchain.SendTxsRequest
+	6,  // 3: blockchain.Transactions.transactions:type_name -> blockchain.Transaction
+	8,  // 4: blockchain.Gateway.SendTx:input_type -> blockchain.SendTxRequest
+	9,  // 5: blockchain.Gateway.SendTxs:input_type -> blockchain.SendTxsRequest
 	0,  // 6: blockchain.Gateway.NewTxs:input_type -> blockchain.TxsRequest
 	3,  // 7: blockchain.Gateway.NewBlocks:input_type -> blockchain.BlocksRequest
-	11, // 8: blockchain.Gateway.SendTx:output_type -> blockchain.SendTxReply
-	12, // 9: blockchain.Gateway.SendTxs:output_type -> blockchain.SendTxsReply
+	10, // 8: blockchain.Gateway.SendTx:output_type -> blockchain.SendTxReply
+	11, // 9: blockchain.Gateway.SendTxs:output_type -> blockchain.SendTxsReply
 	2,  // 10: blockchain.Gateway.NewTxs:output_type -> blockchain.TxsReply
-	6,  // 11: blockchain.Gateway.NewBlocks:output_type -> blockchain.BlocksReply
+	5,  // 11: blockchain.Gateway.NewBlocks:output_type -> blockchain.BlocksReply
 	8,  // [8:12] is the sub-list for method output_type
 	4,  // [4:8] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
@@ -1032,18 +971,6 @@ func file_relay_proto_init() {
 			}
 		}
 		file_relay_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NextValidator); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_relay_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*BlocksReply); i {
 			case 0:
 				return &v.state
@@ -1055,7 +982,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Transaction); i {
 			case 0:
 				return &v.state
@@ -1067,7 +994,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Transactions); i {
 			case 0:
 				return &v.state
@@ -1079,7 +1006,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendTxRequest); i {
 			case 0:
 				return &v.state
@@ -1091,7 +1018,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendTxsRequest); i {
 			case 0:
 				return &v.state
@@ -1103,7 +1030,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendTxReply); i {
 			case 0:
 				return &v.state
@@ -1115,7 +1042,7 @@ func file_relay_proto_init() {
 				return nil
 			}
 		}
-		file_relay_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_relay_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendTxsReply); i {
 			case 0:
 				return &v.state
@@ -1134,7 +1061,7 @@ func file_relay_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_relay_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

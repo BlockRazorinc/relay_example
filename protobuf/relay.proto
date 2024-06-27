@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package blockchain;
+
+option go_package = "/Users/code/relay/grpcServer"; 
+service Gateway {
+  rpc SendTx (SendTxRequest) returns (SendTxReply) {}
+  rpc SendTxs (SendTxsRequest) returns (SendTxsReply) {}
+  rpc NewTxs (TxsRequest) returns (stream TxsReply){}
+  rpc NewBlocks (BlocksRequest) returns (stream BlocksReply){}
+}
+
+message TxsRequest{
+  bool node_validation = 1;
+}
+
+message Tx{
+  bytes from = 1;
+  bool local_region = 12;
+  int64 timestamp = 13;
+  bytes raw_tx = 14;
+}
+
+message TxsReply{
+   Tx tx = 1;
+}
+
+message BlocksRequest{
+  bool node_validation = 1;
+}
+
+message BlockHeader{
+  string parent_hash = 1;
+  string sha3_uncles = 2;
+  string miner = 3;
+  string state_root = 4;
+  string transactions_root = 5;
+  string receipts_root = 6;
+  string logs_bloom = 7;
+  string difficulty = 8;
+  string number = 9;
+  string gas_limit = 10;
+  string gas_used = 11;
+  string timestamp = 12;
+  string extra_data = 13;
+  string mix_hash = 14;
+  string nonce = 15;
+  string base_fee_per_gas = 16;
+  string withdrawals_root = 17;
+}
+
+message NextValidator{
+  string block_height = 1;
+  string coinbase = 2;
+}
+
+message BlocksReply{
+  string hash = 1;
+  BlockHeader header = 2;
+  repeated Tx txs = 3;
+}
+
+message Transaction {
+  string content = 1;
+}
+
+message Transactions {
+  repeated Transaction transactions = 1;
+}
+
+message SendTxRequest {
+  string transaction = 1;
+}
+
+message SendTxsRequest {
+  string transactions = 1;
+}
+
+message SendTxReply {
+  string tx_hash = 1;
+}
+
+message SendTxsReply {
+  repeated string tx_hashs = 1;
+}

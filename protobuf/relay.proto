@@ -16,9 +16,8 @@ message TxsRequest{
 
 message Tx{
   bytes from = 1;
-  bool local_region = 12;
-  int64 timestamp = 13;
-  bytes raw_tx = 14;
+  int64 timestamp = 2;
+  bytes raw_tx = 3;
 }
 
 message TxsReply{

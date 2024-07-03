@@ -55,9 +55,13 @@ func main() {
 	}
 
 	for {
+
 		reply, err := stream.Recv()
 		if err == nil {
 			fmt.Println(reply)
 		}
+
+		fmt.Println("recieve new block, block hash is ", reply.Hash)
+
 	}
 }

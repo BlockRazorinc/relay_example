@@ -49,7 +49,7 @@ func main() {
 	defer cancel()
 
 	// create a subscription using the stream-specific method and request
-	stream, err := client.NewTxs(ctx, &pb.TxsRequest{NodeValidation: true})
+	stream, err := client.NewTxs(ctx, &pb.TxsRequest{NodeValidation: false})
 	if err != nil {
 		fmt.Println("failed to subscribe new tx: ", err)
 		return

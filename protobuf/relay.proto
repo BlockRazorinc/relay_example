@@ -48,10 +48,16 @@ message BlockHeader{
   string withdrawals_root = 17;
 }
 
+message NextValidator{
+  string block_height = 1;
+  string coinbase = 2;
+}
+
 message BlocksReply{
   string hash = 1;
   BlockHeader header = 2;
-  repeated Tx txs = 3;
+  repeated NextValidator nextValidator = 3;
+  repeated Tx txs = 4;
 }
 
 message Transaction {

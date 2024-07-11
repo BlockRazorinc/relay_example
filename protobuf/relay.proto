@@ -44,7 +44,7 @@ message BlockHeader{
   bytes extra_data = 13;
   string mix_hash = 14;
   uint64 nonce = 15;
-  string base_fee_per_gas = 16;
+  uint64 base_fee_per_gas = 16;
   string withdrawals_root = 17;
   uint64 blob_gas_used = 18;
   uint64 excess_blob_gas = 19;

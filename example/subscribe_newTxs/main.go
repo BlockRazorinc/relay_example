@@ -58,8 +58,8 @@ func main() {
 
 	for {
 		reply, err := stream.Recv()
-		if err == nil {
-			fmt.Println(reply)
+		if err != nil {
+			fmt.Println("stream recieve error: ", err)
 		}
 		tx := &types.Transaction{}
 
